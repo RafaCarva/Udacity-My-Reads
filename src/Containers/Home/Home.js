@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+//API
 import * as BooksAPI from '../../Utils/BooksAPI'
 import {Link} from 'react-router-dom'
 //components
@@ -18,34 +19,23 @@ class Home extends Component {
         {name:'Currently Reading',filterProp:'currentlyReading'}
        ]
     }
-
-   // this.shelfGenerator = this.shelfGenerator.bind(this)
-   // this.changeBookShelf = this.changeBookShelf.bind(this)
   }
 
-
-  //buscar todos os livros e setalos no state
+  /**
+   * get all books 
+   */
   componentDidMount() {
     BooksAPI.getAll().then(res => {
-      //console.log("componrntDidMount",res)
       this.setState({ books: res })
     })
   }
 
-/**
- * 
- */
 shelfGenerator = (item) =>{
 console.log("SHELGENERATOR()");
   const filteredBooks = this.state.books.filter( (book) => {
-
-    //console.log("1-->",book.shelf);
-   // console.log("2-->",item.filterProp); 
-    return book.shelf === item.filterProp 
+   return book.shelf === item.filterProp 
   } )
 
-  //console.log("****",filteredBooks)
-  //console.log("****typeof",typeof(filteredBooks))
   return filteredBooks
 
 }
@@ -57,7 +47,6 @@ console.log("SHELGENERATOR()");
  */
 changeBookShelf = (bookInstance,newShelf ) => {
 
-
   BooksAPI.update(bookInstance,newShelf).then(() => {
 
     bookInstance.shelf = newShelf
@@ -65,15 +54,10 @@ changeBookShelf = (bookInstance,newShelf ) => {
       books: this.state.books.filter((b)=>
     b.id != bookInstance.id).concat([bookInstance])
     })
-
-
   })
 } 
 
- 
-
   render() {
-    
     return (
       <div className="app">
         <Header />
@@ -87,7 +71,6 @@ changeBookShelf = (bookInstance,newShelf ) => {
               key={key}/>
          ))
         }
-
 
         <div className="open-search">
           <Link to='/Search'>Add a book</Link>
