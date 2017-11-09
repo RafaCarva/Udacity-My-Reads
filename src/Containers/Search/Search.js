@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 //API
 import * as BooksAPI from '../../Utils/BooksAPI'
+//Libs
+import { PulseLoader } from 'halogenium';
+import { Debounce } from 'react-throttle'
 //Components
 import Shelf from '../../Components/shelf/shelf'
-import { Debounce } from 'react-throttle'
+
 
 
 class Search extends Component {
@@ -15,7 +18,8 @@ class Search extends Component {
     this.state={
       booksFound:[],
       query:'',
-      shelfTitle:'Books Found'
+      shelfTitle:'Books Found',
+      showLoader:false
     }
   }
 
@@ -30,7 +34,9 @@ class Search extends Component {
    */
   updateBooksFound = (query) =>{
 
+    this.setState({showLoader:true})
     if (query === '') {
+      this.setState({showLoader:false})
       this.setState({booksFound:[]})
       return
     }
@@ -39,6 +45,7 @@ class Search extends Component {
         this.setState({booksFound:[]})
         return
       }
+      this.setState({showLoader:false})
       this.setState({booksFound:result})
       }
     )
@@ -73,13 +80,26 @@ class Search extends Component {
           </div>
           <div className="search-books-results">
             <ol className="books-grid">
+
+            
+
               <Shelf
-              shelfTitle = {this.state.shelfTitle}
-              shelfBooks = {this.state.booksFound}
-              changeBookShelf = {this.changeBookShelf}
+              shelfTitle={this.state.shelfTitle}
+              shelfBooks={this.state.booksFound}
+              changeBookShelf={this.changeBookShelf}
               />
 
             </ol>
+            <div style={{display:'flex', justifyContent:'center' }}>
+              {this.state.showLoader
+              ?
+              <PulseLoader color="#26A65B" size="16px" margin="4px"/>
+              :
+              null
+              }
+            </div>
+            
+            
           </div>
         </div>
        

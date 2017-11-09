@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 //API
 import * as BooksAPI from '../../Utils/BooksAPI'
-import {Link} from 'react-router-dom'
+//Lib
+import { Link } from 'react-router-dom'
 //components
 import Header from '../../Components/header/header'
 import Shelf from '../../Components/shelf/shelf'
@@ -13,11 +14,11 @@ class Home extends Component {
 
     this.state = {
       books: [],
-      shelves:[
-        {name:'Read', filterProp:'read' },
-        {name:'Want to Read',filterProp:'wantToRead'},
-        {name:'Currently Reading',filterProp:'currentlyReading'}
-       ]
+      shelves: [
+        { name: 'Read', filterProp: 'read' },
+        { name: 'Want to Read', filterProp: 'wantToRead' },
+        { name: 'Currently Reading', filterProp: 'currentlyReading' }
+      ],
     }
   }
 
@@ -30,32 +31,29 @@ class Home extends Component {
     })
   }
 
-shelfGenerator = (item) =>{
-console.log("SHELGENERATOR()");
-  const filteredBooks = this.state.books.filter( (book) => {
-   return book.shelf === item.filterProp 
-  } )
-
-  return filteredBooks
-
-}
-  
-/**
- * Function for select onChange in <Book>.
- * This function will call the 'update' method:
- * https://github.com/udacity/reactnd-project-myreads-starter
- */
-changeBookShelf = (bookInstance,newShelf ) => {
-
-  BooksAPI.update(bookInstance,newShelf).then(() => {
-
-    bookInstance.shelf = newShelf
-    this.setState({
-      books: this.state.books.filter((b)=>
-    b.id != bookInstance.id).concat([bookInstance])
+  shelfGenerator = (item) => {
+    const filteredBooks = this.state.books.filter((book) => {
+      return book.shelf === item.filterProp
     })
-  })
-} 
+    return filteredBooks
+  }
+
+  /**
+   * Function for select onChange in <Book>.
+   * This function will call the 'update' method:
+   * https://github.com/udacity/reactnd-project-myreads-starter
+   */
+  changeBookShelf = (bookInstance, newShelf) => {
+
+    BooksAPI.update(bookInstance, newShelf).then(() => {
+
+      bookInstance.shelf = newShelf
+      this.setState({
+        books: this.state.books.filter((book) =>
+          book.id !== bookInstance.id).concat([bookInstance])
+      })
+    })
+  }
 
   render() {
     return (
@@ -63,13 +61,13 @@ changeBookShelf = (bookInstance,newShelf ) => {
         <Header />
 
         {/*shelfes*/}
-        { this.state.shelves.map( (item, key) =>(
-            <Shelf 
-              shelfTitle={item.name} 
-              shelfBooks={this.shelfGenerator(item)} 
-              changeBookShelf={this.changeBookShelf}
-              key={key}/>
-         ))
+        {this.state.shelves.map((item, key) => (
+          <Shelf
+            shelfTitle={item.name}
+            shelfBooks={this.shelfGenerator(item)}
+            changeBookShelf={this.changeBookShelf}
+            key={key} />
+        ))
         }
 
         <div className="open-search">
