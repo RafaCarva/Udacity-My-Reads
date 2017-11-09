@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import * as BooksAPI from '../../Utils/BooksAPI'
 //Components
 import Shelf from '../../Components/shelf/shelf'
+import { Debounce } from 'react-throttle'
 
 
 class Search extends Component {
@@ -20,8 +21,6 @@ class Search extends Component {
 
   queryMaker = (event) =>{
     this.setState({query:event})
-    //console.log(this.state.query)
-
     this.updateBooksFound(this.state.query)
   }
 
@@ -36,6 +35,10 @@ class Search extends Component {
       return
     }
     BooksAPI.search(query,20).then((result)=>{
+      if(result === undefined){
+        this.setState({booksFound:[]})
+        return
+      }
       this.setState({booksFound:result})
       }
     )
@@ -45,8 +48,10 @@ class Search extends Component {
    * Call API
    * https://github.com/udacity/reactnd-project-myreads-starter#update
    */
-  changeBookShelf = (bookId,newShelf) => {
-    BooksAPI.update(bookId,newShelf)
+  changeBookShelf = (bookInstance,newShelf) => {
+    BooksAPI.update(bookInstance,newShelf).then(()=>{
+      bookInstance.shelf=newShelf
+    })
   }
 
   render() {
@@ -57,13 +62,13 @@ class Search extends Component {
             <Link to='/Home' className="close-search">Close</Link>
 
             <div className="search-books-input-wrapper">
-
+            <Debounce time="400" handler="onChange">
               <input 
                 type="text" 
                 placeholder="Search by title or author"
                 onChange={ event => this.queryMaker(event.target.value)}  
               />
-
+              </Debounce>
             </div>
           </div>
           <div className="search-books-results">

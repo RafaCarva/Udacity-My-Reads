@@ -15,7 +15,7 @@ const shelf = (props) => {
 
         <div className="bookshelf-books">
           <ol className="books-grid">
-            <li style={{ display: 'flex' }}>
+            <li style={{ display: 'flex', flexWrap:'wrap' }}>
 
               {console.log("------", props.shelfBooks)}
               {props.shelfBooks.map((book, key) => (

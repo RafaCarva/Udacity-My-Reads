@@ -29,6 +29,7 @@ body, .app {
 
 .bookshelf {
   padding: 0 10px 20px;
+  text-align: center;
 }
 
 @media (min-width: 600px) {
@@ -122,6 +123,7 @@ body, .app {
 
 .book {
   width: 140px;
+  margin: 15px;
 }
 .book-title,
 .book-authors {
