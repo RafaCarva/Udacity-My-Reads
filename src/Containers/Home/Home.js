@@ -39,7 +39,7 @@ class Home extends Component {
   }
 
   /**
-   * Function for select onChange in <Book>.
+   * Function for <select> onChange in <Book>.
    * This function will call the 'update' method:
    * https://github.com/udacity/reactnd-project-myreads-starter
    */
@@ -71,10 +71,16 @@ class Home extends Component {
         }
 
         <div className="open-search">
-          <Link to='/Search'>Add a book</Link>
+        <Link to={{
+          pathname:'/Search',
+          state:{books:this.state.books}
+        }}
+        >
+          Add a book</Link>
         </div>
       </div>
     )
   }
 }
 export default Home;
+

@@ -7,7 +7,7 @@ const header = () => {
     <div className="list-books">
       <div className="list-books-title">
         <h1>
-          <Link to='/Home' style={{textDecoration:'none', color:'#ffffff'}} >
+          <Link to='/' style={{textDecoration:'none', color:'#ffffff'}} >
             MyReads
           </Link>
         </h1>

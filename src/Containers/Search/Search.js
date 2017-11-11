@@ -8,23 +8,21 @@ import { Debounce } from 'react-throttle'
 //Components
 import Shelf from '../../Components/shelf/shelf'
 
-
-
 class Search extends Component {
 
-
-  constructor() {
-    super();
-    this.state={
-      booksFound:[],
-      query:'',
-      shelfTitle:'Books Found',
-      showLoader:false
+  constructor(props) {
+    super(props);
+    this.state = {
+      userBooks: this.props.location.state.books,
+      booksFound: [],
+      query: '',
+      shelfTitle: 'Books Found',
+      showLoader: false
     }
   }
 
-  queryMaker = (event) =>{
-    this.setState({query:event})
+  queryMaker = (event) => {
+    this.setState({ query: event })
     this.updateBooksFound(this.state.query)
   }
 
@@ -32,32 +30,47 @@ class Search extends Component {
    * Call API
    * https://github.com/udacity/reactnd-project-myreads-starter#search
    */
-  updateBooksFound = (query) =>{
+  updateBooksFound = (query) => {
 
-    this.setState({showLoader:true})
+    this.setState({ showLoader: true })
     if (query === '') {
-      this.setState({showLoader:false})
-      this.setState({booksFound:[]})
+      this.setState({ showLoader: false })
+      this.setState({ booksFound: [] })
       return
     }
-    BooksAPI.search(query,20).then((result)=>{
-      if(result === undefined){
-        this.setState({booksFound:[]})
+    BooksAPI.search(query, 20).then((result) => {
+      if (result === undefined) {
+        this.setState({ booksFound: [] })
         return
       }
-      this.setState({showLoader:false})
-      this.setState({booksFound:result})
-      }
+
+      this.setState({ showLoader: false })
+      this.setState({ booksFound: this.synchronizeShelf(result) })
+    }
     )
+  }
+
+  //Synchronize Shelf between state book and found book
+  synchronizeShelf = (booksFound) => {
+    this.state.userBooks.map(stateItem =>
+      booksFound.map(foundItem =>
+        (stateItem.id === foundItem.id)
+          ?
+          (foundItem.shelf = stateItem.shelf)
+          :
+          null
+      )
+    )
+    return booksFound
   }
 
   /**
    * Call API
    * https://github.com/udacity/reactnd-project-myreads-starter#update
    */
-  changeBookShelf = (bookInstance,newShelf) => {
-    BooksAPI.update(bookInstance,newShelf).then(()=>{
-      bookInstance.shelf=newShelf
+  changeBookShelf = (bookInstance, newShelf) => {
+    BooksAPI.update(bookInstance, newShelf).then(() => {
+      bookInstance.shelf = newShelf
     })
   }
 
@@ -66,48 +79,40 @@ class Search extends Component {
       <div className="app">
         <div className="search-books">
           <div className="search-books-bar">
-            <Link to='/Home' className="close-search">Close</Link>
+            <Link to='/' className="close-search">Close</Link>
 
             <div className="search-books-input-wrapper">
-            <Debounce time="400" handler="onChange">
-              <input 
-                type="text" 
-                placeholder="Search by title or author"
-                onChange={ event => this.queryMaker(event.target.value)}  
-              />
+              <Debounce time="400" handler="onChange">
+                <input
+                  type="text"
+                  placeholder="Search by title or author"
+                  onChange={event => this.queryMaker(event.target.value)}
+                />
               </Debounce>
             </div>
           </div>
           <div className="search-books-results">
             <ol className="books-grid">
 
-            
-
               <Shelf
-              shelfTitle={this.state.shelfTitle}
-              shelfBooks={this.state.booksFound}
-              changeBookShelf={this.changeBookShelf}
+                shelfTitle={this.state.shelfTitle}
+                shelfBooks={this.state.booksFound}
+                changeBookShelf={this.changeBookShelf}
               />
 
             </ol>
-            <div style={{display:'flex', justifyContent:'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
               {this.state.showLoader
-              ?
-              <PulseLoader color="#26A65B" size="16px" margin="4px"/>
-              :
-              null
+                ?
+                <PulseLoader color="#26A65B" size="16px" margin="4px" />
+                :
+                null
               }
             </div>
-            
-            
           </div>
         </div>
-       
-
       </div>
     )
   }
-
-
 }
 export default Search;

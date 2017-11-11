@@ -8,7 +8,6 @@ export default props=>(
     <span>
       <Switch>
         <Route exact path='/' component={Home}/>
-        <Route  path='/Home' component={Home}/>
         <Route  path='/Search' component={Search}/>
       </Switch>
     </span>

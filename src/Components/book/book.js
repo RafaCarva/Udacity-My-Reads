@@ -15,7 +15,6 @@ const book = (props) => {
             defaultValue={props.bookShelf} 
             onChange={ (e)=> props.changeBookShelf( props.bookInstance,e.target.value,) }
           >
-
             <option value="none" disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
@@ -25,11 +24,8 @@ const book = (props) => {
         </div>
       </div>
       <div className="book-title">{props.bookTitle}</div>
-
-      {/*to do tratar os autores (destrinchar esse array)*/}
       <div className="book-authors">{props.bookAuthors}</div>
     </div>
-
 
   )
 }
