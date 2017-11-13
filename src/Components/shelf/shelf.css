@@ -1,0 +1,5 @@
+.books-shelf{
+  display:flex;
+  flex-wrap: wrap
+}
+

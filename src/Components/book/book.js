@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import './book.css'
 
 const book = (props) => {
   return (
@@ -7,7 +8,7 @@ const book = (props) => {
     <div className="book">
       <div className="book-top">
         <div className="book-cover"
-          style={{ width: 128, height: 193, backgroundImage: `url(${props.bookCover})` }}>
+          style={{backgroundImage: `url(${props.bookCover})` }}>
 
         </div>
         <div className="book-shelf-changer">

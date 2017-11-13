@@ -17,12 +17,15 @@ class Search extends Component {
       booksFound: [],
       query: '',
       shelfTitle: 'Books Found',
-      showLoader: false
+      showLoader: false,
+      noBooksFoundMessage:'Sorry, we did not find any books by that name.',
+      showMessageNoBooksFound:false
     }
   }
 
   queryMaker = (event) => {
     this.setState({ query: event })
+    if(this.state.query.length === 0){this.setState({ showMessageNoBooksFound: false })}
     this.updateBooksFound(this.state.query)
   }
 
@@ -40,15 +43,20 @@ class Search extends Component {
     }
     BooksAPI.search(query, 20).then((result) => {
       if (result === undefined) {
+        this.setState({ showLoader: false })
+        this.setState({ showMessageNoBooksFound: true })
         this.setState({ booksFound: [] })
         return
       }
       if (result.error) {
+        this.setState({ showLoader: false })
+        this.setState({ showMessageNoBooksFound: true })
         this.setState({ booksFound: [] })
         return
       }
 
       this.setState({ showLoader: false })
+      this.setState({ showMessageNoBooksFound: false })
       this.setState({ booksFound: this.synchronizeShelf(result) })
     }
     )
@@ -56,7 +64,6 @@ class Search extends Component {
 
   //Synchronize Shelf between state book and found book
   synchronizeShelf = (booksFound) => {
-
 
     booksFound.map(foundItem => {
 
@@ -99,6 +106,12 @@ class Search extends Component {
             </div>
           </div>
           <div className="search-books-results">
+
+            {this.state.showMessageNoBooksFound ?
+              <h4>{this.state.noBooksFoundMessage}</h4>:
+              null
+            }
+
             <ol className="books-grid">
 
               <Shelf

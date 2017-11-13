@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Book from '../book/book'
-
+import './shelf.css'
 
 const shelf = (props) => {
   return (
@@ -11,7 +11,7 @@ const shelf = (props) => {
         <h2 className="bookshelf-title">{props.shelfTitle}</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
-            <li style={{ display: 'flex', flexWrap: 'wrap' }}>
+            <li className="books-shelf">
               {props.shelfBooks.map((book, key) => (
                 <Book
                   bookTitle={book.title}
