@@ -93,6 +93,17 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+This repository is the "My Reads" project,
+ 
+This project was based in Udacity project starter [check here](https://github.com/udacity/reactnd-project-myreads-starter)
+
+Extra libs used in this project:
+*[react-throttle](https://www.npmjs.com/package/react-throttle)
+
+react-throttle is an npm package which contains two React components: Throttle and Debounce. These components can be wrapped around a child component, the event handlers of which will be either throttled or debounced depending on which component you choose.
+
+*[halogenium](https://github.com/kirillDanshin/halogenium)
+
+A collection of loading spinners with React.js based on halogen.
 
 For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
