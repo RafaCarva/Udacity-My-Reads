@@ -11,6 +11,10 @@ To get started developing right away:
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
 
+## How to test this application
+* In the root folder start all tests with 'yarn test'
+|-- If console show this warning: 'No tests found related to files changed since last commit.' , just press 'a' to run all tests
+
 ## What You're Getting
 ```bash
 ├── CONTRIBUTING.md
