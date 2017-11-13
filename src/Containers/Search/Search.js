@@ -43,6 +43,10 @@ class Search extends Component {
         this.setState({ booksFound: [] })
         return
       }
+      if (result.error) {
+        this.setState({ booksFound: [] })
+        return
+      }
 
       this.setState({ showLoader: false })
       this.setState({ booksFound: this.synchronizeShelf(result) })
@@ -52,15 +56,18 @@ class Search extends Component {
 
   //Synchronize Shelf between state book and found book
   synchronizeShelf = (booksFound) => {
-    this.state.userBooks.map(stateItem =>
-      booksFound.map(foundItem =>
-        (stateItem.id === foundItem.id)
-          ?
-          (foundItem.shelf = stateItem.shelf)
-          :
-          null
+
+
+    booksFound.map(foundItem => {
+
+     if(foundItem.shelf === undefined){foundItem.shelf = 'none'}
+
+      this.state.userBooks.map(stateItem =>
+        (stateItem.id === foundItem.id) ? (foundItem.shelf = stateItem.shelf) : null
       )
-    )
+      return true
+    })
+
     return booksFound
   }
 

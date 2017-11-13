@@ -93,17 +93,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Contributing
 
-This repository is the "My Reads" project,
+This repository is the "My Reads" project.
  
-This project was based in Udacity project starter [check here](https://github.com/udacity/reactnd-project-myreads-starter)
+This project was based in Udacity project starter [check here].(https://github.com/udacity/reactnd-project-myreads-starter)
 
 Extra libs used in this project:
-*[react-throttle](https://www.npmjs.com/package/react-throttle)
 
-react-throttle is an npm package which contains two React components: Throttle and Debounce. These components can be wrapped around a child component, the event handlers of which will be either throttled or debounced depending on which component you choose.
+*[react-throttle](https://www.npmjs.com/package/react-throttle) is an npm package which contains two React components: Throttle and Debounce. These components can be wrapped around a child component, the event handlers of which will be either throttled or debounced depending on which component you choose.
 
-*[halogenium](https://github.com/kirillDanshin/halogenium)
-
-A collection of loading spinners with React.js based on halogen.
+*[halogenium](https://github.com/kirillDanshin/halogenium) ia an collection of loading spinners with React.js based on halogen.
 
 For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
